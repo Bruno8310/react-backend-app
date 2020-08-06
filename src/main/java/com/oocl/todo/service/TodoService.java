@@ -37,7 +37,8 @@ public class TodoService {
     }
 
 
-    public TodoListResponse updateTodo(int i, TodoListRequest todoListRequest) {
-        return null;
+    public TodoListResponse updateTodo(Integer id, TodoListRequest todoListRequest) {
+        Todo todo = todoRepository.save(todoRequestMapper.mapperTodo(todoListRequest));
+        return todoRequestMapper.mapperTodoResponse(todo);
     }
 }
