@@ -44,7 +44,6 @@ class TodoListServiceTest {
         when(mockTodoRequestMapper.mapperTodo(todoListRequest)).thenReturn(todo);
         // when
         Todo todo1 = todoService.addTodo(todoListRequest);
-
         // then
         assertEquals(todo.getContent(), todo1.getContent());
     }

@@ -43,4 +43,12 @@ public class TodoListRequest {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "TodoListRequest{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TodoService {
@@ -36,13 +38,16 @@ public class TodoService {
         return todoRepository.save(todo);
     }
 
-
     public TodoListResponse updateTodo(Integer id, TodoListRequest todoListRequest) {
         if (!id.equals(todoListRequest.getId())) {
             return null;
         }
-        Todo todo = todoRepository.save(todoRequestMapper.mapperTodo(todoListRequest));
-        return todoRequestMapper.mapperTodoResponse(todo);
+        Todo todo = todoRequestMapper.mapperTodo(todoListRequest);
+        Todo todo1 = todoRepository.findById(id).get();
+        if (Objects.nonNull(todo.getStatus())) {
+            todo1.setStatus(todo.getStatus());
+        }
+        return todoRequestMapper.mapperTodoResponse(todoRepository.save(todo1));
     }
 
     public void deleteTodo(Integer id) {
