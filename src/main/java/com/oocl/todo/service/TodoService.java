@@ -41,4 +41,7 @@ public class TodoService {
         Todo todo = todoRepository.save(todoRequestMapper.mapperTodo(todoListRequest));
         return todoRequestMapper.mapperTodoResponse(todo);
     }
+
+    public void deleteTodo(int i) {
+    }
 }

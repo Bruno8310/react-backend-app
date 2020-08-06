@@ -13,8 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class TodoListServiceTest {
     @Test
@@ -68,6 +67,21 @@ class TodoListServiceTest {
         TodoListResponse todoListResponse1 = todoService.updateTodo(1, todoListRequest);
         // then
         assertEquals(todoListRequest.getContent(), todoListResponse1.getContent());
+    }
+
+    @Test
+    void should_delete_todo_when_delete_todo_given_id() {
+        // given
+        TodoListRequest todoListRequest = new TodoListRequest(1, "zhangshan", true);
+        Todo todo = getTodo();
+        TodoRepository mockTodoListRepository = mock(TodoRepository.class);
+        TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
+        when(mockTodoRequestMapper.mapperTodo(todoListRequest)).thenReturn(todo);
+        // when
+        TodoService todoService = new TodoService(mockTodoListRepository, mockTodoRequestMapper);
+        todoService.deleteTodo(1);
+        // then
+        verify(mockTodoListRepository).deleteById(1);
     }
 
 
