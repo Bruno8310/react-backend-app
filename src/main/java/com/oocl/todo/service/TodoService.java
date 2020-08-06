@@ -42,6 +42,7 @@ public class TodoService {
         return todoRequestMapper.mapperTodoResponse(todo);
     }
 
-    public void deleteTodo(int i) {
+    public void deleteTodo(Integer id) {
+        todoRepository.deleteById(id);
     }
 }

@@ -6,12 +6,14 @@ import com.oocl.todo.mapper.TodoRequestMapper;
 import com.oocl.todo.model.Todo;
 import com.oocl.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Null;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
@@ -70,20 +72,31 @@ class TodoListServiceTest {
     }
 
     @Test
+    void should_return_null_when_update_todo_given_wrong_id() {
+        // given
+        int id = 2;
+        TodoListRequest todoListRequest = new TodoListRequest(1, "zhangsan", true);
+        TodoRepository mockTodoListRepository = mock(TodoRepository.class);
+        TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
+        // when
+        TodoService todoService = new TodoService(mockTodoListRepository, mockTodoRequestMapper);
+        TodoListResponse todoListResponse = todoService.updateTodo(id, todoListRequest);
+        // then
+        assertNull(todoListResponse);
+    }
+
+    @Test
     void should_delete_todo_when_delete_todo_given_id() {
         // given
-        TodoListRequest todoListRequest = new TodoListRequest(1, "zhangshan", true);
         Todo todo = getTodo();
         TodoRepository mockTodoListRepository = mock(TodoRepository.class);
         TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
-        when(mockTodoRequestMapper.mapperTodo(todoListRequest)).thenReturn(todo);
         // when
         TodoService todoService = new TodoService(mockTodoListRepository, mockTodoRequestMapper);
         todoService.deleteTodo(1);
         // then
         verify(mockTodoListRepository).deleteById(1);
     }
-
 
     private Todo getTodo() {
         return new Todo(1, "zhangsan", false);
