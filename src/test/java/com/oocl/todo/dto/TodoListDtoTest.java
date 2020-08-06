@@ -13,9 +13,10 @@ public class TodoListDtoTest {
     void should_return_todo_when_todoResquest_mapper_to_todo_given_todoResquest() {
         // given
         TodoListRequest todoListRequest = new TodoListRequest(1, "shangsan", false);
-        TodoRequestMapper todoRequestMapper = mock(TodoRequestMapper.class);
+        TodoRequestMapper todoRequestMapper = new TodoRequestMapper();
         // when
         Todo todo = todoRequestMapper.mapperTodo(todoListRequest);
+        System.out.println(todo);
         // then
         assertEquals("shangsan", todo.getContent());
         assertEquals(false, todo.getStatus());

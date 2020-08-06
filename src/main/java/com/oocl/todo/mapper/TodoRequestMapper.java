@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 public class TodoRequestMapper {
 
     public Todo mapperTodo(TodoListRequest todoListRequest) {
-        return null;
+        Todo todo = new Todo();
+        BeanUtils.copyProperties(todoListRequest, todo);
+        return todo;
     }
 }
