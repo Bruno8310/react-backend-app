@@ -1,5 +1,6 @@
 package com.oocl.todo.service;
 
+import com.oocl.todo.dto.TodoListRequest;
 import com.oocl.todo.dto.TodoListResponse;
 import com.oocl.todo.mapper.TodoRequestMapper;
 import com.oocl.todo.model.Todo;
@@ -8,10 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TodoListServiceTest {
     @Test
@@ -19,6 +22,7 @@ class TodoListServiceTest {
         // given
         TodoRepository mockTodoListRepository = mock(TodoRepository.class);
         TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
+
         given(mockTodoListRepository.findAll()).willReturn(Arrays.asList(getTodo()));
         TodoService todoService = new TodoService(mockTodoListRepository, mockTodoRequestMapper);
         // when
@@ -30,17 +34,41 @@ class TodoListServiceTest {
     @Test
     void should_return_todolistresponse_when_add_todo_given_a_not_null_todo() {
         // given
-        Todo todo = getTodo();
+        Todo todo = new Todo(1, "zhangsan", false);
+        TodoListRequest todoListRequest = new TodoListRequest(1, "zhangsan", false);
         TodoRepository mockTodoListRepository = mock(TodoRepository.class);
         TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
         given(mockTodoListRepository.save(todo)).willReturn(getTodo());
         TodoService todoService = new TodoService(mockTodoListRepository, mockTodoRequestMapper);
+        when(mockTodoRequestMapper.mapperTodo(todoListRequest)).thenReturn(todo);
         // when
-        TodoListResponse todoListResponse = todoService.addTodo(todo);
+        Todo todo1 = todoService.addTodo(todoListRequest);
+
         // then
-        assertEquals(todo.getContent(), todoListResponse.getContent());
+        assertEquals(todo.getContent(), todo1.getContent());
     }
 
+    @Test
+    void should_return_new_todo_when_update_todo_given_todo_id() {
+        // given
+        Todo oldTodo = getTodo();
+        Todo newTodo = new Todo(1, "zhangsan", true);
+        TodoListRequest todoListRequest = new TodoListRequest(1, "zhangsan", true);
+        TodoListResponse todoListResponse = new TodoListResponse(1, "zhangsan", true);
+        TodoRepository mockTodoListRepository = mock(TodoRepository.class);
+        TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
+
+        when(mockTodoListRepository.findById(1)).thenReturn(Optional.of(oldTodo));
+        when(mockTodoRequestMapper.mapperTodo(todoListRequest)).thenReturn(newTodo);
+        when(mockTodoListRepository.save(newTodo)).thenReturn(newTodo);
+        when(mockTodoRequestMapper.mapperTodoResponse(newTodo)).thenReturn(todoListResponse);
+        // when
+        TodoService todoService = new TodoService(mockTodoListRepository, mockTodoRequestMapper);
+        TodoListResponse todoListResponse1 = todoService.updateTodo(1, todoListRequest);
+
+        // then
+        assertEquals(todoListRequest.getContent(), todoListResponse.getContent());
+    }
 
 
     private Todo getTodo() {

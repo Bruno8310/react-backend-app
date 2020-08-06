@@ -1,5 +1,6 @@
 package com.oocl.todo.service;
 
+import com.oocl.todo.dto.TodoListRequest;
 import com.oocl.todo.dto.TodoListResponse;
 import com.oocl.todo.mapper.TodoRequestMapper;
 import com.oocl.todo.model.Todo;
@@ -30,8 +31,13 @@ public class TodoService {
         return todoListResponses;
     }
 
-    public TodoListResponse addTodo(Todo todo) {
+    public Todo addTodo(TodoListRequest todoListRequest) {
+        Todo todo = todoRequestMapper.mapperTodo(todoListRequest);
+        return todoRepository.save(todo);
+    }
 
-       return null;
+
+    public TodoListResponse updateTodo(int i, TodoListRequest todoListRequest) {
+        return null;
     }
 }

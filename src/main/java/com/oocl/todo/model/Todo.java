@@ -64,4 +64,13 @@ public class Todo {
     public int hashCode() {
         return Objects.hash(id, content, status);
     }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
