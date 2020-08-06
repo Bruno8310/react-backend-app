@@ -16,9 +16,22 @@ public class TodoListDtoTest {
         TodoRequestMapper todoRequestMapper = new TodoRequestMapper();
         // when
         Todo todo = todoRequestMapper.mapperTodo(todoListRequest);
-        System.out.println(todo);
+
         // then
         assertEquals("shangsan", todo.getContent());
         assertEquals(false, todo.getStatus());
+    }
+
+    @Test
+    void should_return_todoresponse_when_todo_mapper_todoresponse_todo_given_todo() {
+        // given
+        Todo todo = new Todo(1, "shangsan", false);
+        TodoRequestMapper todoRequestMapper = new TodoRequestMapper();
+        // when
+        TodoListResponse todoResponse = todoRequestMapper.mapperTodoResponse(todo);
+
+        // then
+        assertEquals("shangsan", todoResponse.getContent());
+        assertEquals(false, todoResponse.getStatus());
     }
 }

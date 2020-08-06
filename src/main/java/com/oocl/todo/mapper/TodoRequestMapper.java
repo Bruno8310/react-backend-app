@@ -2,6 +2,7 @@ package com.oocl.todo.mapper;
 
 
 import com.oocl.todo.dto.TodoListRequest;
+import com.oocl.todo.dto.TodoListResponse;
 import com.oocl.todo.model.Todo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -13,5 +14,9 @@ public class TodoRequestMapper {
         Todo todo = new Todo();
         BeanUtils.copyProperties(todoListRequest, todo);
         return todo;
+    }
+
+    public TodoListResponse mapperTodoResponse(Todo todo) {
+        return null;
     }
 }
