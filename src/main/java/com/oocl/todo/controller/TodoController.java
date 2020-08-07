@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins="https://localhost:3000")
+
 @RestController
 @RequestMapping("/todos")
 public class TodoController {
@@ -35,7 +35,6 @@ public class TodoController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     TodoListResponse updateTodo(@PathVariable Integer id, @RequestBody TodoListRequest todoListRequest) {
-        System.out.println(todoListRequest.toString());
         return todoService.updateTodo(id, todoListRequest);
     }
 

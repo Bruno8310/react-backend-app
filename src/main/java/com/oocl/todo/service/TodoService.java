@@ -42,12 +42,14 @@ public class TodoService {
         if (!id.equals(todoListRequest.getId())) {
             return null;
         }
-        Todo todo = todoRequestMapper.mapperTodo(todoListRequest);
-        Todo todo1 = todoRepository.findById(id).get();
-        if (Objects.nonNull(todo.getStatus())) {
-            todo1.setStatus(todo.getStatus());
+        Todo newTodo = todoRequestMapper.mapperTodo(todoListRequest);
+        System.out.println(newTodo.toString());
+        Todo oldTodo = todoRepository.findById(id).get();
+
+        if (Objects.nonNull(oldTodo.getStatus())) {
+            oldTodo.setStatus(newTodo.getStatus());
         }
-        return todoRequestMapper.mapperTodoResponse(todoRepository.save(todo1));
+        return todoRequestMapper.mapperTodoResponse(todoRepository.save(oldTodo));
     }
 
     public void deleteTodo(Integer id) {

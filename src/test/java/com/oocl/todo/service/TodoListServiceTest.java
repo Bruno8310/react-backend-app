@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 class TodoListServiceTest {
     @Test
-    void should_return_todolistresponses_when_get_all_todo_given_nothing() {
+    void should_return_todo_list_responses_when_get_all_todo_given_nothing() {
         // given
         TodoRepository mockTodoListRepository = mock(TodoRepository.class);
         TodoRequestMapper mockTodoRequestMapper = mock(TodoRequestMapper.class);
@@ -33,7 +33,7 @@ class TodoListServiceTest {
     }
 
     @Test
-    void should_return_todolistresponse_when_add_todo_given_a_not_null_todo() {
+    void should_return_todo_list_response_when_add_todo_given_a_not_null_todo() {
         // given
         Todo todo = new Todo(1, "zhangsan", false);
         TodoListRequest todoListRequest = new TodoListRequest(1, "zhangsan", false);
